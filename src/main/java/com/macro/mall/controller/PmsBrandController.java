@@ -22,14 +22,15 @@ public class PmsBrandController {
     @Autowired
     private PmsBrandService pmsBrandService;
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(PmsBrandController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PmsBrandController.class);
 
     @GetMapping("/listAll")
-    public CommonResult<List<PmsBrand>> getBrandList(){
+    public CommonResult<List<PmsBrand>> getBrandList() {
         return CommonResult.success(pmsBrandService.listAllBrand());
     }
+
     @PostMapping("/create")
-    public CommonResult createBrand(@RequestBody PmsBrand pmsBrand){
+    public CommonResult createBrand(@RequestBody PmsBrand pmsBrand) {
         CommonResult commonResult;
         int count = pmsBrandService.createBrand(pmsBrand);
         if (count == 1) {

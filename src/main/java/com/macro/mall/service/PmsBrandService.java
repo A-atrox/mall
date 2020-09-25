@@ -1,6 +1,7 @@
 package com.macro.mall.service;
 
 import com.macro.mall.entiy.PmsBrand;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

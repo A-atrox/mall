@@ -2,10 +2,11 @@ package com.macro.mall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.macro.mall.dao.PmsBrandMapper;
-import com.macro.mall.entiy.PmsBrand;
-import com.macro.mall.entiy.PmsBrandExample;
+import com.macro.mall.entity.PmsBrand;
+import com.macro.mall.entity.PmsBrandExample;
 import com.macro.mall.service.PmsBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Date 2020/9/25
  * @describe
  */
+@Primary
 @Service
 public class PmsBrandServiceImpl implements PmsBrandService {
     @Autowired

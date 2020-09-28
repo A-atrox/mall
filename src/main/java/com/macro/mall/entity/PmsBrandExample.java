@@ -1,4 +1,4 @@
-package com.macro.mall.entiy;
+package com.macro.mall.entity;
 
 import java.util.ArrayList;
 import java.util.List;

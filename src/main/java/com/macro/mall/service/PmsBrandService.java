@@ -1,6 +1,6 @@
 package com.macro.mall.service;
 
-import com.macro.mall.entiy.PmsBrand;
+import com.macro.mall.entity.PmsBrand;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.List;
  * @Date 2020/9/25
  * @describe
  */
+@Service
 public interface PmsBrandService {
     List<PmsBrand> listAllBrand();
 

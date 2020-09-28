@@ -1,7 +1,7 @@
 package com.macro.mall.dao;
 
-import com.macro.mall.entiy.PmsBrand;
-import com.macro.mall.entiy.PmsBrandExample;
+import com.macro.mall.entity.PmsBrand;
+import com.macro.mall.entity.PmsBrandExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

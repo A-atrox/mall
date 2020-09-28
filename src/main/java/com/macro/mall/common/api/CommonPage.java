@@ -7,8 +7,9 @@ import java.util.List;
 
 /**
  * 分页数据封装类
- * Created by macro on 2019/4/19.
- */
+  *@author  guoyf
+  *@Date  2020/9/27
+  */
 public class CommonPage<T> {
     private Integer pageNum;
     private Integer pageSize;

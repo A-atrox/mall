@@ -49,16 +49,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js",
-                        "/swagger-resources/**",
-                        "/v2/api-docs/**")
+                        "/**/*.js")
                 .permitAll()
                 .antMatchers("/admin/login", "/admin/register")
                 .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
-//                    .antMatchers("/**") // 测试时全部运行访问
-//                    .permitAll()
+                .antMatchers("/swagger-ui/**").anonymous()
+                .antMatchers("/swagger-resources/**").anonymous()
+                .antMatchers("/profile/**").anonymous()
+                .antMatchers("/profile/**").anonymous()
+                .antMatchers("/v2/**").anonymous()
+//                .antMatchers("/**") // 测试时全部运行访问
+//                .permitAll()
                 .anyRequest()//除上面外的所有请求全部需要鉴权认证
                 .authenticated();
         // 禁用缓存
@@ -78,27 +81,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        //获取登录信息
-//        return username -> {
-//            UmsAdmin admin = adminService.getAdminByUsername(username);
-//            if (admin != null) {
-//                List<UmsPermission> permissionList = adminService.getPermissionList(admin.getId());
-//                return new AdminUserDetails(admin, permissionList);
-//            }
-//            throw new UsernameNotFoundException("用户名或密码错误");
-//        };
-//    }
+    @Override
+    @Bean
+    public UserDetailsService userDetailsService() {
+        //获取登录信息
+        return username -> {
+            UmsAdmin admin = adminService.getAdminByUsername(username);
+            if (admin != null) {
+                List<UmsPermission> permissionList = adminService.getPermissionList(admin.getId());
+                return new AdminUserDetails(admin, permissionList);
+            }
+            throw new UsernameNotFoundException("用户名或密码错误");
+        };
+    }
 
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter();
     }
 
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManager() throws Exception{
-//        return super.authenticationManager();
-//    }
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception{
+        return super.authenticationManager();
+    }
 }

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,7 @@ public class PmsBrandController {
      */
     @ApiOperation("获取所有品牌列表")
     @GetMapping("/listAll")
+    @PreAuthorize("hasAnyAuthority('pms:brand:read')")
     public CommonResult<List<PmsBrand>> getBrandList() {
         return CommonResult.success(pmsBrandService.listAllBrand());
     }
@@ -53,6 +55,7 @@ public class PmsBrandController {
      */
     @ApiOperation("添加品牌")
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('pms:brand:create')")
     public CommonResult createBrand(@RequestBody PmsBrand pmsBrand) {
         CommonResult commonResult;
         int count = pmsBrandService.createBrand(pmsBrand);
@@ -67,6 +70,7 @@ public class PmsBrandController {
     }
     @ApiOperation("更新指定id 的品牌")
     @PostMapping("/update/{id}")
+    @PreAuthorize("hasAnyAuthority('pms:brand:update')")
     public CommonResult updateBrand(@PathVariable("id")Long id, @RequestBody @Valid PmsBrand pmsBrandDto, BindingResult result){
         System.out.println(result);
         CommonResult commonResult;
@@ -82,6 +86,7 @@ public class PmsBrandController {
     }
     @ApiOperation("删除指定id的品牌")
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('pms:brand:delete')")
     public CommonResult deleteBrand(@PathVariable("id") Long id){
         CommonResult commonResult;
         int count = pmsBrandService.deleteBrand(id);

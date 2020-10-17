@@ -20,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-    @Autowired
+
     private PasswordEncoder passwordEncoder;
     @Value("${jwt.tokenHead}")
     private String tokenHead;

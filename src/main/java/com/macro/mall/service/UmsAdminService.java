@@ -2,6 +2,7 @@ package com.macro.mall.service;
 
 import com.macro.mall.entity.UmsAdmin;
 import com.macro.mall.entity.UmsPermission;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface UmsAdminService {
      * 获取用户所有权限（包括角色权限和+-权限）
      */
     List<UmsPermission> getPermissionList(Long adminId);
+
+    UserDetailsService userDetailsService();
 }

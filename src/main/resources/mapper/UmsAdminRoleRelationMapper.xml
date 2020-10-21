@@ -6,7 +6,7 @@
     <result column="admin_id" property="adminId" jdbcType="BIGINT" />
     <result column="role_id" property="roleId" jdbcType="BIGINT" />
   </resultMap>
-  <select id="getPermissionList" resultMap="com.macro.mall.tiny.mbg.mapper.UmsPermissionMapper.BaseResultMap">
+  <select id="getPermissionList" resultMap="com.macro.mall.dao.UmsPermissionMapper.BaseResultMap">
         SELECT
             p.*
         FROM

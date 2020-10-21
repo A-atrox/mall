@@ -3,12 +3,14 @@ package com.macro.mall.common.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.TextCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,10 +43,11 @@ public class JwtTokenUtil {
      * 根据负责生成JWT的token
      */
     private String generateToken(Map<String, Object> claims) {
+        String encodedString = Base64.getEncoder().encodeToString(secret.getBytes());
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512,secret)
+                .signWith(SignatureAlgorithm.HS512,encodedString)
                 .compact();
     }
 
@@ -52,14 +55,16 @@ public class JwtTokenUtil {
      * 从token中获取JWT中的负载
      */
     private Claims getClaimsFromToken(String token) {
+        String encodedString = Base64.getEncoder().encodeToString(secret.getBytes());
         Claims claims = null;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(secret)
+                    .setSigningKey(encodedString)
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
             LOGGER.info("JWT格式验证失败:{}",token);
+            LOGGER.info("message：  ",e);
         }
         return claims;
     }

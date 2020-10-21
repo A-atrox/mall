@@ -2,6 +2,7 @@ package com.macro.mall.service.impl;
 
 import com.macro.mall.common.util.JwtTokenUtil;
 import com.macro.mall.dao.UmsAdminRoleRelationMapper;
+import com.macro.mall.dto.AdminUserDetails;
 import com.macro.mall.dto.UmsAdminLoginParam;
 import com.macro.mall.dao.UmsAdminMapper;
 import com.macro.mall.entity.UmsAdmin;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +22,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,10 +38,8 @@ import java.util.List;
 public class UmsAdminServiceImpl implements UmsAdminService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UmsAdminServiceImpl.class);
     @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
@@ -82,7 +83,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     public String login(String username, String password) {
         String token = null;
         try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailsService().loadUserByUsername(username);
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
             }
@@ -99,5 +100,17 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public List<UmsPermission> getPermissionList(Long adminId) {
         return adminRoleRelationDao.getPermissionList(adminId);
+    }
+    @Override
+    public UserDetailsService userDetailsService() {
+        //获取登录信息
+        return username -> {
+            UmsAdmin admin = getAdminByUsername(username);
+            if (admin != null) {
+                List<UmsPermission> permissionList = getPermissionList(admin.getId());
+                return new AdminUserDetails(admin, permissionList);
+            }
+            throw new UsernameNotFoundException("用户名或密码错误");
+        };
     }
 }

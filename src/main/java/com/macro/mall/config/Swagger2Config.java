@@ -70,7 +70,6 @@ public class Swagger2Config {
         result.add(apiKey);
         return result;
     }
-
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Swagger UI mall 商城")

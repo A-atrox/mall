@@ -5,6 +5,12 @@ spring:
     url: jdbc:mysql://localhost:3306/mall?userUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-nodes: 127.0.0.1:9300 # es的连接地址及端口号
+      cluster-name: elasticsearch
 mybatis:
   mapper-locations:
     - classpath:mapper/*.xml

@@ -56,8 +56,8 @@ public class EsProductController {
     @ApiOperation("简单搜索")
     @GetMapping("/search/simple")
     public CommonResult<CommonPage<EsProduct>> search(@RequestParam(value = "keywords") String keywords,
-                                                      @RequestParam(value = "pageNum") Integer pageNum,
-                                                      @RequestParam(value = "pageSize") Integer pageSize){
+                                                      @RequestParam(value = "pageNum",required = false,defaultValue = "0") Integer pageNum,
+                                                      @RequestParam(value = "pageSize",required = false,defaultValue = "10") Integer pageSize){
         Page<EsProduct> esProductPage = esProductService.search(keywords, pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(esProductPage));
     }

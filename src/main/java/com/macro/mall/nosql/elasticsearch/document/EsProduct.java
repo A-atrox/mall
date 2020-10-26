@@ -21,7 +21,7 @@ import java.util.List;
 public class EsProduct implements Serializable {
     private static final long serialVersionUID = -2327425503544813849L;
     @Id
-    private  Long ID;
+    private  Long id;
     @Field(type = FieldType.Keyword)
     private String productSn;
     private String brandId;
@@ -44,6 +44,6 @@ public class EsProduct implements Serializable {
     private Integer stock;
     private Integer promotionType;
     private Integer sort;
-    private List<EsProductAttributeValue> attValueList;
+    private List<EsProductAttributeValue> attrValueList;
 
 }

@@ -46,13 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 允许对于网站静态资源的无授权访问
-        web.ignoring().antMatchers("/v2/api-docs",//swagger api json
+        web.ignoring().antMatchers( "/",
+                "/csrf","/v2/api-docs",//swagger api json
                 "/swagger-resources/configuration/ui",//用来获取支持的动作
                 "/swagger-resources",//用来获取api-docs的URI
                 "/swagger-resources/configuration/security",//安全选项
                 "/swagger-ui.html" ,"/favicon.ico",
-                "/",
-                "/csrf",
                 "/**/*.html",
                 "/**/*.css",
                 "/**/*.js",
@@ -69,8 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-//                .antMatchers("/**") // 测试时全部运行访问
-//                .permitAll()
+                .antMatchers("/**") // 测试时全部运行访问
+                .permitAll()
                 .anyRequest()//除上面外的所有请求全部需要鉴权认证
                 .authenticated();
         // 禁用缓存

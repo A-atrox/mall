@@ -36,14 +36,8 @@ public class EsProductServiceImpl implements EsProductService {
     @Override
     public int importAll() {
         List<EsProduct> esProductList =esProductDao.getAllEsProductList(null);
-        Iterator<EsProduct> esProductIterator = (Iterator<EsProduct>) productRepository.saveAll(esProductList);
-        Iterator<EsProduct> iterator = esProductIterator;
-        int result = 0;
-        while (iterator.hasNext()){
-            result++;
-            iterator.next();
-        }
-        return result;
+        productRepository.saveAll(esProductList);
+        return esProductList.size();
     }
 
     @Override
@@ -68,7 +62,7 @@ public class EsProductServiceImpl implements EsProductService {
             List<EsProduct> esProductList = new ArrayList<>();
             ids.forEach(id ->{
                 EsProduct esProduct = new EsProduct();
-                esProduct.setID(id);
+                esProduct.setId(id);
                 esProductList.add(esProduct);
             });
             productRepository.deleteAll(esProductList);

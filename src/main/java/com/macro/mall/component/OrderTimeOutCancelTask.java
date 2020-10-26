@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class OrderTimeOutCancelTask {
 
-    @Scheduled(cron = "0/5 * * ? * ?")
+//    @Scheduled(cron = "0/5 * * ? * ?")
     private void cancelTimeOutOrder(){
         //TODO 完善定时任务
         log.info("取消订单并且释放锁定库存！！！");

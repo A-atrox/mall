@@ -1,6 +1,8 @@
 server:
   port: 8081
 spring:
+  jackson:
+    time-zone: GMT+8
   datasource:
     url: jdbc:mysql://localhost:3306/mall?userUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
@@ -11,6 +13,13 @@ spring:
         enabled: true
       cluster-nodes: 127.0.0.1:9300 # es的连接地址及端口号
       cluster-name: elasticsearch
+    mongodb:
+      host: 10.81.1.55
+      port: 27017
+      uri: mongodb://10.81.1.55:27017/local
+      database: local
+      username:
+      password:
 mybatis:
   mapper-locations:
     - classpath:mapper/*.xml

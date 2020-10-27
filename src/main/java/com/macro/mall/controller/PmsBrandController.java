@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Api(value = "商品品牌管理服务API",tags = {"商品品牌管理服务API"})
 @RestController
-@RequestMapping("/brand")
+@RequestMapping("/v1/brand")
 public class PmsBrandController {
 
     @Autowired

@@ -13,9 +13,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author guoyf
  * @Date 2020/9/27
  */
-@SpringBootApplication(exclude = MongoAutoConfiguration.class)
 @MapperScan({"com.macro.mall.dao","com.macro.mall.controller"})
 @EnableScheduling
+@SpringBootApplication
 public class MallApplication {
 
     public static void main(String[] args) {

@@ -165,15 +165,5 @@ public class Algorithm {
             val = x;
         }
     }
-    public  ListNode insertionSortList(ListNode head) {
-        if(head==null||head.next==null){
-            return head;
-        }
-        ListNode cur = head;
-        while(head!=null){
-            ListNode temp = head.next;
-            
-        }
-    }
 
 }

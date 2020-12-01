@@ -1,8 +1,8 @@
 package everyDayAlgorithm;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.apache.commons.collections.ListUtils;
+
+import java.util.*;
 
 /**
  * @author guoyf
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Algorithm {
     public static void main(String[] args) {
-        int [] nums= {-1, 0, 1, 2, -1, -4};
+        int[] nums = {-1, 0, 1, 2, -1, -4};
         System.out.println(Arrays.toString(threeSum(nums).toArray()));
     }
 
@@ -117,34 +117,63 @@ public class Algorithm {
      * 三数之和
      */
     public static List<List<Integer>> threeSum(int[] nums) {
-        int x1, y1;
-        List<List<Integer>> result = new ArrayList<>();
-        for (int i = 0; i < nums.length ; i++) {
+        Arrays.sort(nums);
+        int x1;
+        Set<List<Integer>> result = new HashSet<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
             x1 = i + 1;
+            if (nums[i] > 0) {
+                break;
+            }
             while (x1 < nums.length) {
-                y1 = x1 + 1;
-                while (y1 < nums.length) {
-                    if (nums[i] + nums[x1] + nums[y1] == 0) {
-                        List<Integer> list = new ArrayList<>();
-                        list.add(nums[i]);
-                        list.add(nums[x1]);
-                        list.add(nums[y1]);
-                        result.add(list);
-                    }
-                    y1++;
+                int temp = -(nums[i] + nums[x1]);
+                if (map.containsKey(temp) && map.get(temp) != i && map.get(temp) != x1) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[x1]);
+                    list.add(nums[map.get(temp)]);
+                    Collections.sort(list);
+                    result.add(list);
                 }
                 x1++;
             }
-
         }
-        return  result;
+        return new ArrayList<>(result);
     }
+
     public static List<List<Integer>> threeSum2(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {
-            int count = - nums[i];
+            int count = -nums[i];
         }
         return result;
     }
+
+    /**
+     * 链表插入排序
+     */
+    class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) {
+            val = x;
+        }
+    }
+    public  ListNode insertionSortList(ListNode head) {
+        if(head==null||head.next==null){
+            return head;
+        }
+        ListNode cur = head;
+        while(head!=null){
+            ListNode temp = head.next;
+            
+        }
+    }
+
 }

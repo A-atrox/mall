@@ -12,8 +12,11 @@ import java.util.*;
  */
 public class Algorithm {
     public static void main(String[] args) {
-        int[] nums = {-1, 0, 1, 2, -1, -4};
-        System.out.println(Arrays.toString(threeSum(nums).toArray()));
+//        int[] nums = {-1, 0, 1, 2, -1, -4};
+//        System.out.println(Arrays.toString(threeSum(nums).toArray()));
+        int[][] A = {{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 0, 0}};
+        Algorithm algorithm = new Algorithm();
+        System.out.println(algorithm.matrixScore(A));
     }
 
     /**
@@ -161,9 +164,84 @@ public class Algorithm {
     class ListNode {
         int val;
         ListNode next;
+
         ListNode(int x) {
             val = x;
         }
     }
 
+    /***
+     * 861:翻转矩阵后得分
+     */
+    public int matrixScore(int[][] A) {
+        int sum = 0;
+        // 遍历第一列 使其全为1 行转换
+        for (int i = 0; i < A.length; i++) {
+            if (A[i][0] == 0) {
+                A = rowFlip(A, i);
+            }
+        }
+        sum += A.length * (1 << (A[0].length - 1));
+        // 遍历剩余几列   列转换  使其可以有最多的1
+        for (int j = 1; j < A[0].length; j++) {
+            int oneSum = 0, zeroSum = 0;
+            for (int i = 0; i < A.length; i++) {
+                if (A[i][j] == 0) {
+                    zeroSum++;
+                } else {
+                    oneSum++;
+                }
+            }
+            if (zeroSum > oneSum) {
+//                A = columnFlip(A, j);
+                sum += zeroSum * (1 << (A[0].length - j - 1));
+            } else {
+                sum += oneSum * (1 << (A[0].length - j - 1));
+            }
+        }
+//        Arrays.stream(A).forEach(a -> System.out.println(Arrays.toString(a)));
+        return sum;
+    }
+
+    /**
+     * @return int[][]
+     * @Description 行转换
+     * @Param [A, rIndex]
+     * @author guoyf
+     * @date 2020/12/7 16:52
+     */
+    public int[][] rowFlip(int[][] A, int rIndex) {
+        int rLength = A.length - 1;
+        if (rIndex > rLength) {
+            //如果是无效rIndex那就啥也都不做
+            return A;
+        }
+        for (int i = 0; i < A[0].length; i++) {
+            A[rIndex][i] = conversion(A[rIndex][i]);
+        }
+        return A;
+    }
+
+    /**
+     * @return int[][]
+     * @Description 列转换
+     * @Param [A, cIndex]
+     * @author guoyf
+     * @date 2020/12/7 16:51
+     */
+    public int[][] columnFlip(int[][] A, int cIndex) {
+        int cLength = A[0].length - 1;
+        if (cIndex > cLength) {
+            //如果是无效rIndex那就啥也都不做
+            return A;
+        }
+        for (int i = 0; i < A.length; i++) {
+            A[i][cIndex] = conversion(A[i][cIndex]);
+        }
+        return A;
+    }
+
+    public int conversion(int temp) {
+        return temp == 0 ? 1 : 0;
+    }
 }

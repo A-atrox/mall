@@ -1,7 +1,10 @@
 package everyDayAlgorithm;
 
+import cn.hutool.http.Method;
 import org.apache.commons.collections.ListUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.HttpCookie;
 import java.util.*;
 
 /**
@@ -14,9 +17,14 @@ public class Algorithm {
     public static void main(String[] args) {
 //        int[] nums = {-1, 0, 1, 2, -1, -4};
 //        System.out.println(Arrays.toString(threeSum(nums).toArray()));
-        int[][] A = {{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 0, 0}};
+//        int[][] A = {{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 0, 0}};
         Algorithm algorithm = new Algorithm();
-        System.out.println(algorithm.matrixScore(A));
+//        System.out.println(algorithm.matrixScore(A));
+//        int[] T = {73, 74, 75, 71, 69, 72, 76, 73};
+//        System.out.println(Arrays.toString(algorithm.dailyTemperatures(T)));
+        int[] g = {1, 2};
+        int[] s = {1, 2,3};
+        System.out.println(algorithm.findContentChildren(g, s));
     }
 
     /**
@@ -243,5 +251,58 @@ public class Algorithm {
 
     public int conversion(int temp) {
         return temp == 0 ? 1 : 0;
+    }
+
+    /**
+     * @return int[]
+     * @Description 每日温度观测
+     * @Param [T]
+     * @author guoyf
+     * @date 2020/12/8 14:40
+     */
+    public int[] dailyTemperatures(int[] T) {
+
+        if (T.length == 0) {
+            return null;
+        }
+        int[] out = new int[T.length];
+        for (int i = T.length - 1; i >= 0; i--) {
+            int j = i + 1;
+            while (j < T.length) {
+                if (T[j] > T[i]) {
+                    out[i] = j - i;
+                    break;
+                } else if (out[j] == 0) {
+                    break;
+                } else {
+                    j += out[j];
+                }
+            }
+        }
+        return out;
+    }
+
+    /**
+     * @return int
+     * @Description 饼干分发
+     * @Param [g, s]
+     * @author guoyf
+     * @date 2020/12/25 15:13
+     */
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int i = 0, j = 0;
+        int sum = 0;
+        while (i < g.length && j < s.length) {
+            if (s[j] >= g[i]) {
+                sum++;
+                i++;
+                j++;
+            } else {
+                j++;
+            }
+        }
+        return sum;
     }
 }
